@@ -6,7 +6,6 @@ class NumArray:
         for i in range(len(nums)):
             prefix += nums[i]
             self.sum_arry.append(prefix)
-        print(self.sum_arry)
 
     def sumRange(self, left: int, right: int) -> int:
         right_most = self.sum_arry[right]
