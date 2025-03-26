@@ -6,10 +6,7 @@ class Solution:
         # use hash-map and list
         hash_map = {}
         for each_num in nums:
-            if each_num in hash_map:
-                hash_map[each_num] += 1
-            else:
-                hash_map[each_num] = 1
+            hash_map[each_num] = hash_map.get(each_num, 0) + 1
             if hash_map[each_num] > max_count//3:
                     res.add(each_num)
         return list(res)
