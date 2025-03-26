@@ -3,11 +3,8 @@ class Solution:
         first = prices[0]
         profitSofar = 0
         for i in range(len(prices)):
-            if prices[i] < first:
-                first = prices[i]
-            elif prices[i] - first >= profitSofar:
-                profitSofar = prices[i] - first
-            # print(profitSofar)
+            first = min(prices[i], first)
+            profitSofar = max(profitSofar, prices[i] - first)
 
         return profitSofar
             
