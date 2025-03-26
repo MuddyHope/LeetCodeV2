@@ -15,4 +15,4 @@ def nxxx():
         f.write('0')
 
 import atexit
-# atexit.register(nxxx)  
+atexit.register(nxxx)  
