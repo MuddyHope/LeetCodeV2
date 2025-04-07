@@ -9,5 +9,4 @@ class Solution:
             if j < len(word2):
                 res += word2[j]
                 j += 1
-            print(f'res, {res}')
         return res
