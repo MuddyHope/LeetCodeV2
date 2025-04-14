@@ -6,7 +6,7 @@ class Solution:
             curr_sum = numbers[left] + numbers[right]
             if target == curr_sum:
                 return [left+1, right+1]
-            if curr_sum > target:
+            elif curr_sum > target:
                 right -= 1
             else:
                 left += 1
