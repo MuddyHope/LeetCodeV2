@@ -5,7 +5,6 @@ class Solution:
         check_ongoing = False
 
         while h_ptr < len(haystack):
-            print(f"h-> {haystack[h_ptr]}, n-> {needle[n_ptr]}")
             if haystack[h_ptr] == needle[n_ptr]:
                 if not check_ongoing:
                     guess = h_ptr
