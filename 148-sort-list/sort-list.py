@@ -13,7 +13,6 @@ class Solution:
             curr = curr.next
         
         vals = sorted(vals)
-        print(vals)
         dummy = new_head = ListNode()
 
         for each in vals:
