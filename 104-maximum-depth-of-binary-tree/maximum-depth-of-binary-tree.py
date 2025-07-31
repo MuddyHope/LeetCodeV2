@@ -9,17 +9,16 @@ class Solution:
         if not root:
             return 0
 
-        # BFS
-        queue = deque([root])
-        level = 0
+        # DFS
+        stack = [(root, 1)]
+        res = 0
 
-        while queue:
+        while stack:
 
-            for i in range(len(queue)):
-                node = queue.popleft()
-                if node.left:
-                    queue.append(node.left)
-                if node.right:
-                    queue.append(node.right)
-            level += 1
-        return level
+            node, level = stack.pop()
+            if node:
+                res = max(res, level)
+                stack.append((node.left, 1+level))
+                stack.append((node.right, 1+ level))
+            
+        return res
