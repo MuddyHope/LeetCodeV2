@@ -12,7 +12,7 @@ class Solution:
                 return True
             # if (p and not q) or (q and not p):
             #     return False
-            if p and not q or q and not p:
+            if not p or not q:
                 return False
             print(f"p:{p.val}, q: {q.val}")
 
