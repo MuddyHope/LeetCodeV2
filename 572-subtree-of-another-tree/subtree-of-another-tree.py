@@ -23,8 +23,6 @@ class Solution:
             return True
         
         if p and q and p.val == q.val:
-            print(f"checking for : {p.val}, {q.val}")
-
             return (self.is_same_tree(p.left, q.left) and self.is_same_tree(p.right, q.right))
         return False
         
