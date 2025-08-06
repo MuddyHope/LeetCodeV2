@@ -23,7 +23,6 @@ class Solution:
                 curr = dq.popleft()
                 if not curr:
                     continue
-                print(f"curr: {curr.val}")
                 if curr.right:
                     dq.append(curr.right)
                 if curr.left:
