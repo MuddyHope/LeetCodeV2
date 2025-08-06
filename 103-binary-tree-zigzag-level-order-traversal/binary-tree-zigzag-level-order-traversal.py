@@ -21,8 +21,8 @@ class Solution:
                 odd = 1
             for _ in range(len(dq)):
                 curr = dq.popleft()
-                if not curr:
-                    continue
+                # if not curr:
+                #     continue
                 if curr.right:
                     dq.append(curr.right)
                 if curr.left:
