@@ -4,14 +4,12 @@ class Solution:
         maxHeap = [-cnt for cnt in count.values()]
         heapq.heapify(maxHeap)
 
+        q = deque()
         time = 0
-        q = deque()  # pairs of [-cnt, idleTime]
+
         while maxHeap or q:
             time += 1
-
-            if not maxHeap:
-                time = q[0][1]
-            else:
+            if maxHeap:
                 cnt = 1 + heapq.heappop(maxHeap)
                 if cnt:
                     q.append([cnt, time + n])
