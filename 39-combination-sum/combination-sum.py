@@ -14,8 +14,6 @@ class Solution:
                 return
 
             subset.append(candidates[i])
-            print(f"i: {i}")
-            print(f"subset: {subset}")
 
             # adding itself
             dfs(i)
@@ -26,6 +24,5 @@ class Solution:
 
 
         dfs(0)
-        print(res)
         return res
         
