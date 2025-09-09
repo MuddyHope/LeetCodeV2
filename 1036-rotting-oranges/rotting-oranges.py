@@ -17,6 +17,7 @@ class Solution:
             nonlocal timer
             while queue:
                 size = len(queue)
+                print(f"queue: {queue}")
                 for _ in range(size):
                     curr_x, curr_y = queue.popleft()
                     seen.add((curr_x, curr_y))
@@ -41,6 +42,7 @@ class Solution:
                 if grid[row][col] == 2:
                     dq.append((row, col))
                     seen.add((row, col))
+        print(f'Start DQ: {dq}')
 
         bfs(dq)
 
