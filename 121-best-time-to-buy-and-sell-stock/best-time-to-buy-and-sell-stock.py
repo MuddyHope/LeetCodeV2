@@ -1,14 +1,14 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        l, r = 0, 1
-        maxP = 0
-        profit = 0
-        while r < len(prices):
-            if prices[l] < prices[r]:
-                profit = prices[r] - prices[l]
-                maxP = max(profit, maxP)
-            else:
-                l = r
-            r += 1
-        return maxP
-            
+        # sliding window
+
+        i, j = 0, 1
+        max_profit = 0
+        while j < len(prices):
+            if prices[j] < prices[i]:
+                i = j  # move buy pointer to the cheaper price
+            profit_so_far = prices[j] - prices[i]
+            max_profit = max(max_profit, profit_so_far)
+            j += 1
+
+        return max_profit
