@@ -1,14 +1,19 @@
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-        my_dict = {}
+        count = {}
+        max_freq = 0
         left = 0
-        res = 0
-        for right in range(len(s)):
-            my_dict[s[right]] = 1 + my_dict.get(s[right], 0)
+        result = 0
 
-            while (right - left + 1) - max(my_dict.values()) > k:
-                my_dict[s[left]] -= 1
+        for right in range(len(s)):
+            count[s[right]] = count.get(s[right], 0) + 1
+            max_freq = max(max_freq, count[s[right]])
+
+            # If replacements required exceed k → shrink window
+            while (right - left + 1) - max_freq > k:
+                count[s[left]] -= 1
                 left += 1
-            res = max(res, right-left+1)
-        return res
-        
+
+            result = max(result, right - left + 1)
+
+        return result
