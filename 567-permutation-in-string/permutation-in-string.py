@@ -15,8 +15,6 @@ class Solution:
         j = i + len(s1)
 
 
-        s2_dict = {}
-
         while j <= len(s2):
             if Counter(s2[i:j]) == s1_counter:
                 return True
