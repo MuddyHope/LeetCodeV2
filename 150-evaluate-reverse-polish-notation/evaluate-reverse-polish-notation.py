@@ -4,7 +4,7 @@ class Solution:
         stack = []
 
         for each in tokens:
-            print(f"current op: {each}, type: {type(each)}")
+            # print(f"current op: {each}, type: {type(each)}")
 
             # check number
             try:
