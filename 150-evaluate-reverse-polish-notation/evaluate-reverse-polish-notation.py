@@ -34,4 +34,4 @@ class Solution:
 
             # print(stack)
 
-        return stack.pop()
+        return stack[-1]
