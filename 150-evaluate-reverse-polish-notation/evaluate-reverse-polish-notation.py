@@ -1,7 +1,7 @@
 class Solution:
     def evalRPN(self, tokens: List[str]) -> int:
 
-        stack = []
+        stack = deque()
 
         for each in tokens:
             # print(f"current op: {each}, type: {type(each)}")
