@@ -1,13 +1,10 @@
-from typing import List
-
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        # Your code here
-        my_dict = {}
+        D = {}
+
         for i in range(len(nums)):
-            if target - nums[i] in my_dict:
-                return [i, my_dict[target-nums[i]]]
+            if target - nums[i] in D:
+                return [i, D[target-nums[i]]]
             else:
-                my_dict[nums[i]] = i
-        print(my_dict)
-    
+                D[nums[i]] = i
+        
