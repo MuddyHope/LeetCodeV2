@@ -1,27 +1,26 @@
 from collections import Counter
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
-
-        if len(s1) > len(s2):
-            return False
-
+        
+        # s1 counter -> O(N)
 
         s1_counter = Counter(s1)
-        print(s1_counter)
 
+        s2_counter = {}
+        # now we create a sliding window of len(s1) and iterate over s2
 
-        s1_len = len(s1)
-        i= 0
-        j = i + len(s1)
-
-
-        while j <= len(s2):
-            if Counter(s2[i:j]) == s1_counter:
-                return True
-            i += 1
-            j = i + len(s1)
-
-
+        left = 0
+        for right in range(0, len(s2)):
+            s2_counter[s2[right]] = 1 + s2_counter.get(s2[right], 0)
+            # print(s2_counter, dict(s1_counter))
+            if (right - left + 1) >= len(s1):
+                if dict(s1_counter) == dict(s2_counter):
+                    return True
+                else:
+                    s2_counter[s2[left]] -= 1
+                    if s2_counter[s2[left]] == 0:
+                        del s2_counter[s2[left]]
+                    left += 1
         return False
-        
-
+            
+            
