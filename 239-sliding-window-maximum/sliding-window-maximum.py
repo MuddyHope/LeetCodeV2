@@ -1,23 +1,32 @@
-from typing import List
-import heapq
+from collections import deque
 
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
 
-        heap = []
         res = []
+        dq = deque()
 
-        for i in range(len(nums)):
+        l, r = 0, 0
 
-            # push negative value to simulate max heap
-            heapq.heappush(heap, (-nums[i], i))
+        while r < len(nums):
 
-            # remove elements outside window
-            while heap[0][1] <= i - k:
-                heapq.heappop(heap)
+            # maintain decreasing deque
+            while dq and dq[-1] < nums[r]:
+                dq.pop()
 
-            # start recording results once window reaches size k
-            if i >= k - 1:
-                res.append(-heap[0][0])
+            dq.append(nums[r])
+
+            # when window size hits k
+            if r - l + 1 == k:
+
+                res.append(dq[0])
+
+                # remove outgoing element
+                if nums[l] == dq[0]:
+                    dq.popleft()
+
+                l += 1
+
+            r += 1
 
         return res
