@@ -1,25 +1,16 @@
-import heapq
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        # bucket sort
+
+        freq = Counter(nums)
+
+        buckets = [ [] for _ in range(len(nums) + 1)]
+
+        for num, count in freq.items():
+            buckets[count].append(num)
         
-        # run through the list, make a dictionary, sort them based off of values, convert them into a list and show [:k]
-
-        hash_map = {}
-
-        for i in nums:
-            hash_map[i] = hash_map.get(i, 0) + 1
-
-        # new_list = sorted(hash_map.keys(), key=lambda x: hash_map[x], reverse=True)
-        # return new_list[:k]
-
-        print(hash_map)
-        heap = []
-
-        for key,count in hash_map.items():
-            heapq.heappush(heap, (-count, key))
-
         res = []
-        for i in range(k):
-            res.append(heapq.heappop(heap)[1])
-        return res
-
+        for each in range(len(buckets)-1, 0, -1):
+            for num in buckets[each]:
+                res.append(num)
+        return res[:k]
