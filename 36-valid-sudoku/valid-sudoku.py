@@ -1,45 +1,48 @@
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
-        my_copy = {str(i): 0 for i in range(10)}
 
-        def line_checker(line):
-            temp = my_copy.copy()
-            for each in line:
+        nums_checker = {i: 0 for i in range(1, 10)}
+
+        def line_checker(nums):
+            temp = nums_checker.copy()
+
+            for each in nums:
                 if each == ".":
                     continue
-                temp[each] += 1
-                if temp[each] > 1:
+
+                if temp[int(each)] >= 1:
                     return False
+
+                temp[int(each)] += 1
+
             return True
 
-        # check for each row
-        for each_row in range(len(board)):
-            row_check = line_checker(board[each_row])
-            if not row_check:
+        # rows
+        for row in range(9):
+            if not line_checker(board[row]):
                 return False
 
-        # keep the row common, keep changing the cols only
-        col = 0
-        while col < len(board):
-            cols = []
-            row = 0
-            while row < len(board):
-                cols.append(board[row][col])
-                row += 1
-            cols_checker = line_checker(cols)
-            if not cols_checker:
-                return False
-            col += 1
+        # columns
+        for col in range(9):
+            col_list = []
 
-        for row_start in range(0, 9, 3):
-            for col_start in range(0, 9, 3):
-                submatrix = [board[row][col] for row in range(row_start, row_start+3) for col in range(col_start, col_start+3)]
-                res = line_checker(submatrix)
-                if not res:
+            for row in range(9):
+                col_list.append(board[row][col])
+
+            if not line_checker(col_list):
+                return False
+
+        # 3x3 boxes
+        for i in range(0, 9, 3):
+            for j in range(0, 9, 3):
+
+                sub_matrix = []
+
+                for r in range(i, i + 3):
+                    for c in range(j, j + 3):
+                        sub_matrix.append(board[r][c])
+
+                if not line_checker(sub_matrix):
                     return False
-                # submatrices.append(submatrix)
+
         return True
-
-
-
-                
