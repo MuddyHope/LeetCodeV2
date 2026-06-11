@@ -1,19 +1,15 @@
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
 
-        nums_checker = {i: 0 for i in range(1, 10)}
 
         def line_checker(nums):
-            temp = nums_checker.copy()
-
+            seen = set()
             for each in nums:
                 if each == ".":
                     continue
-
-                if temp[int(each)] >= 1:
+                elif each in seen:
                     return False
-
-                temp[int(each)] += 1
+                seen.add(each)
 
             return True
 
