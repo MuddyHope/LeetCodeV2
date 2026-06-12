@@ -9,7 +9,7 @@ class Solution:
         for num, count in counter.items():
             buckets[count].append(num)
         
-        print(buckets)
+        # print(buckets)
 
         # loop in reverse
         for num in reversed(range(len(buckets))):
