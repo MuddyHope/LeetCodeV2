@@ -23,14 +23,12 @@ class MyQueue:
         return False if len(self.stack) else True
 
     def reduce_hashmap(self):
-        print(f"hash: {self.hash}")
-        temp = self.hash.copy()
-        for idx, num in temp.items():
+        temp = {}
+        for idx, num in self.hash.items():
             if idx == 0:
-                del self.hash[idx]
                 continue
-            self.hash[idx-1] = num
-        print(f"after: {self.hash}")
+            temp[idx-1] = num
+        self.hash = temp
         
 
 # Your MyQueue object will be instantiated and called as such:
