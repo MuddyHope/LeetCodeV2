@@ -1,16 +1,14 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
+        i, j = 0, 1
         max_profit = 0
+        while j < len(prices):
+            # print(f"checking for prices: {prices[i], i, prices[j], j}")
+            if prices[i] >= prices[j]:       # no chance of making a profit
+                i = j
 
-        l, r = 0, 1
-        profit_so_far = 0
-        while r < len(prices):
-            if prices[l] > prices[r]:
-                l = r
-            elif prices[l] < prices[r]:
-                profit_so_far = prices[r] - prices[l]
-                max_profit = max(profit_so_far, max_profit)
-            r += 1
+            elif prices[i] < prices[j]:
+                max_profit = max(max_profit, prices[j] - prices[i])
+            j += 1
+
         return max_profit
-
-        
