@@ -1,31 +1,29 @@
 class Solution:
-    def threeSum(self, nums: List[int]) -> List[List[int]]:
+    def threeSum(self, nums: list[int]) -> list[list[int]]:
+        
         nums.sort()
-    
-        seen = set()
 
         res = []
 
-        for i in range(len(nums) - 2):
-            left, right = i + 1, len(nums) - 1
+        for i in range(len(nums)):
+            if i > 0 and nums[i] == nums[i-1]:
+                continue
 
-            while left < right:
-                # print(f"combination : {i} {left} {right}")
+            j = i + 1
+            k = len(nums) - 1
 
-                curr_sum = nums[i] + nums[left] + nums[right]
-                if curr_sum == 0:
-                    # print(f"added combination: {i} {left} {right}")
-                    if tuple(sorted((nums[i], nums[left], nums[right]))) not in seen:
-                        seen.add(tuple(sorted((nums[i], nums[left], nums[right]))))
-                        res.append([nums[i], nums[left], nums[right]])
-                    left += 1
-                    right -= 1
+            while j < k:
+                total = nums[i] + nums[j] + nums[k]
 
-                elif curr_sum > 0:
-                    right -= 1
+                if total > 0:
+                    k -= 1
+                elif total < 0:
+                    j += 1
                 else:
-                    left += 1
-        # print("seen", seen)
-        return res
+                    res.append([nums[i], nums[j], nums[k]])
+                    j += 1
+                    k -= 1
 
-            
+                    while nums[j] == nums[j-1] and j < k:
+                        j += 1
+        return res
