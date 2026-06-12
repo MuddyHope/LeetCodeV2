@@ -1,19 +1,17 @@
-from collections import Counter
 class Solution:
     def majorityElement(self, nums: List[int]) -> int:
-        # # brute force method
-        # hash_map = {}
-        # curr_max = [0, 0]
-        # # number, times
-        # for i in range(len(nums)):
-        #     if nums[i] in hash_map:
-        #         hash_map[nums[i]] += 1
-        #     else:
-        #         hash_map[nums[i]] = 1
-        #     if curr_max[1] < hash_map[nums[i]]:
-        #             curr_max[0] = nums[i]
-        #             curr_max[1] = i
-        # return curr_max[0]
-        count = Counter(nums)
-        return count.most_common(1)[0][0]
-            
+        
+        # bucket sort
+
+        buckets = [[] for _ in range(len(nums) + 1)]
+        counter = Counter(nums)
+
+        for num, count in counter.items():
+            buckets[count].append(num)
+        
+        print(buckets)
+
+        # loop in reverse
+        for num in reversed(range(len(buckets))):
+            if buckets[num]:
+                return buckets[num][0]
