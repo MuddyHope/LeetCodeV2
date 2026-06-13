@@ -1,21 +1,17 @@
 class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
-        res = []
+        
+        res, sol = [], []
 
-        subset = []
         def dfs(i):
-            if len(subset) >= k:
-                res.append(subset.copy())
+            if len(sol) == k:
+                res.append(sol[:])
                 return
-            if i > n:
-                return 
-            subset.append(i)
-
-            # print(f"i: {i}, subset: {subset}")
-            dfs(i+1)
-            subset.pop()
-            dfs(i+1)
-
-    
+            
+            for j in range(i, n+1):
+                sol.append(j)
+                dfs(j+1)
+                sol.pop()
+        
         dfs(1)
         return res
