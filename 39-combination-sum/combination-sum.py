@@ -7,7 +7,6 @@ class Solution:
             if curr_sum == target:
                 res.append(sol[:])
                 return
-            
             elif curr_sum > target or i == len(candidates):
                 return
             
@@ -16,5 +15,5 @@ class Solution:
             dfs(i, curr_sum + candidates[i])
             sol.pop()
         
-        dfs(0,0)
+        dfs(0, 0)
         return res
