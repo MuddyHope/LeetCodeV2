@@ -3,31 +3,34 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        if len(nums) > 1:
-            mid = len(nums)//2
-            L = nums[:mid]
-            R = nums[mid:]
-            self.sortColors(L)
-            self.sortColors(R)
+        count0 = 0
+        count1 = 0
+        count2 = 0
 
-            i = j = k = 0
-            while i < len(L) and j < len(R):
-                if L[i] > R[j]:
-                    nums[k] = R[j]
-                    j += 1
-                else:
-                    nums[k] = L[i]
-                    i += 1
-                k += 1
+        # First pass: count frequencies
+        for num in nums:
+            if num == 0:
+                count0 += 1
+            elif num == 1:
+                count1 += 1
+            else:
+                count2 += 1
 
-            while i < len(L):
-                nums[k] = L[i]
-                i += 1
-                k+= 1
-            
-            while j < len(R):
-                nums[k] = R[j]
-                j += 1
-                k += 1
-        
+        # Second pass: overwrite array
+        i = 0
+
+        while count0 > 0:
+            nums[i] = 0
+            i += 1
+            count0 -= 1
+
+        while count1 > 0:
+            nums[i] = 1
+            i += 1
+            count1 -= 1
+
+        while count2 > 0:
+            nums[i] = 2
+            i += 1
+            count2 -= 1
         
