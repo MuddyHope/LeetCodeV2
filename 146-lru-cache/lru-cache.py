@@ -1,59 +1,51 @@
 class Node:
-    def __init__(self, key, val):
+    def __init__(self, key, value):
         self.key = key
-        self.val = val
-        self.next = None
-        self.prev = None
-
+        self.value = value
+        self.left = self.right = None
 
 class LRUCache:
-    
+
     def __init__(self, capacity: int):
-        self.cache = {}
-        # will have key, but val will be a pointer to a node
         self.cap = capacity
-        # left and right are pointers
-        self.left = self.right = Node(0,0)
-        self.left.next, self.right.prev = self.right, self.left
-
-    def remove(self, node: Node):
-        # remove from left
-        prev, nxt = node.prev, node.next
-        prev.next, nxt.prev = nxt, prev
-
+        self.cache = {}
+        self.lfu, self.mfu = Node(0,0), Node(0,0)
+        self.lfu.right, self.mfu.left = self.mfu, self.lfu
     
-    def insert(self, node: Node):
-        # insert to the right
-        prev, nxt = self.right.prev, self.right
-        prev.next = nxt.prev = node
-        node.next, node.prev = nxt, prev
-        
+    def remove(self, node):
+        prev, nxt = node.left, node.right
+        prev.right = nxt
+        nxt.left = prev
+    
+    def insert(self, node):
+        # insert to the left of the self.mfu
+        prev = self.mfu.left
+        self.mfu.left = node
+        prev.right = node
+        node.left = prev
+        node.right = self.mfu
+
 
     def get(self, key: int) -> int:
-        if key in self.cache:
-            gotten_node = self.cache.get(key)
-            # now make it point as this node is Most Recently used
-            # removing it from left pointer
-            self.remove(gotten_node)
-            # inserting to the right of the right pointer
-            self.insert(gotten_node)
-            res = gotten_node.val
-        else:
-            res = -1
-        
-        return res
-        
+        if key not in self.cache:
+            return -1
+        node = self.cache[key]
+        # remove the node from it's position
+        # insert the node to left of self.mfu
+        self.remove(node)
+        self.insert(node)
+        return node.value
 
     def put(self, key: int, value: int) -> None:
+        node = Node(key, value)
         if key in self.cache:
             self.remove(self.cache[key])
-        self.cache[key] = Node(key, value)
-        self.insert(self.cache[key])
-
+        self.cache[key] = node
+        self.insert(node)
         if len(self.cache) > self.cap:
-            lru = self.left.next
-            self.remove(lru)
-            del self.cache[lru.key]
+            lfu = self.lfu.right
+            self.remove(lfu)
+            del self.cache[lfu.key]
 
         
 
