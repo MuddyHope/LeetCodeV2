@@ -12,5 +12,4 @@ class Solution:
             temp = curr.next
             curr.next = prev
             prev, curr = curr, temp
-        print(curr, prev)
         return prev
