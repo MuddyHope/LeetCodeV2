@@ -1,13 +1,12 @@
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
         
-        res = []
         hash_map = defaultdict(list)
-
+        counter = defaultdict(list)
         for word in strs:
-            word_map = [0] * 26
+            counter = [0] * 26
             for letter in word:
-                word_map[ord(letter) - ord('a')] += 1
-            hash_map[tuple(word_map)].append(word)
+                counter[ord(letter) - ord('a')] += 1
+            hash_map[tuple(counter)].append(word)
         
         return list(hash_map.values())
