@@ -1,48 +1,51 @@
 from collections import Counter
 
 class Solution:
-    def minWindow(self, s: str, t: str):
+    def minWindow(self, s: str, t: str) -> str:
+
+        if len(s) < len(t):
+            return ""
+
+        t_counter = dict(Counter(t))
+        s_counter = {}
 
         res = ""
-        min_length = float("inf")
+        min_len = float("inf")
 
-        if len(t) > len(s):
-            return res
+        i = 0
+        j = 0
 
-        t_dict = Counter(t)
-        s_dict = {}
+        while j < len(s):
 
-        left = 0
+            s_counter[s[j]] = 1 + s_counter.get(s[j], 0)
 
-        for right in range(len(s)):
-
-            s_dict[s[right]] = 1 + s_dict.get(s[right], 0)
-
-            # check if window satisfies t
             valid = True
-            for c in t_dict:
-                if s_dict.get(c, 0) < t_dict[c]:
+
+            for letter, count in t_counter.items():
+                if s_counter.get(letter, 0) < count:
                     valid = False
                     break
 
             while valid:
 
-                if (right - left + 1) < min_length:
-                    min_length = right - left + 1
-                    res = s[left:right+1]
+                if (j - i + 1) < min_len:
+                    min_len = j - i + 1
+                    res = s[i:j+1]
 
-                # shrink window
-                s_dict[s[left]] -= 1
-                if s_dict[s[left]] == 0:
-                    del s_dict[s[left]]
+                s_counter[s[i]] -= 1
 
-                left += 1
+                if s_counter[s[i]] == 0:
+                    del s_counter[s[i]]
 
-                # check validity again
+                i += 1
+
                 valid = True
-                for c in t_dict:
-                    if s_dict.get(c, 0) < t_dict[c]:
+
+                for letter, count in t_counter.items():
+                    if s_counter.get(letter, 0) < count:
                         valid = False
                         break
+
+            j += 1
 
         return res
