@@ -1,51 +1,34 @@
-from collections import Counter
-
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-
+        
         if len(s) < len(t):
             return ""
 
-        t_counter = dict(Counter(t))
-        s_counter = {}
-
         res = ""
-        min_len = float("inf")
+        resLen = float("inf")
 
-        i = 0
-        j = 0
+        counter = dict(Counter(t))
+        window = {}
 
-        while j < len(s):
+        have, need = 0, len(counter)
+        l = 0
+        for r in range(len(s)):
+            window[s[r]] = 1 + window.get(s[r], 0)
 
-            s_counter[s[j]] = 1 + s_counter.get(s[j], 0)
+            if s[r] in counter and window[s[r]] == counter[s[r]]:
+                have += 1
+            
+            while have == need:
+                # update res
+                if (r-l + 1) < resLen:
+                    res = s[l:r+1]
+                    resLen = r -l +1
+                
+                window[s[l]] -= 1
+                if s[l] in counter and window[s[l]] < counter[s[l]]:
+                    have -= 1
+                l += 1
+        return res if resLen != float("inf") else ""
 
-            valid = True
 
-            for letter, count in t_counter.items():
-                if s_counter.get(letter, 0) < count:
-                    valid = False
-                    break
 
-            while valid:
-
-                if (j - i + 1) < min_len:
-                    min_len = j - i + 1
-                    res = s[i:j+1]
-
-                s_counter[s[i]] -= 1
-
-                if s_counter[s[i]] == 0:
-                    del s_counter[s[i]]
-
-                i += 1
-
-                valid = True
-
-                for letter, count in t_counter.items():
-                    if s_counter.get(letter, 0) < count:
-                        valid = False
-                        break
-
-            j += 1
-
-        return res
