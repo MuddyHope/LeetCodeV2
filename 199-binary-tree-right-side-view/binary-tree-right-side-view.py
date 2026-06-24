@@ -1,4 +1,3 @@
-from collections import deque
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -8,21 +7,32 @@ from collections import deque
 class Solution:
     def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
         res = []
-        if not root:
-            return res
-        
-        dq = deque([root])
+        hash_map = defaultdict(list)
+        max_level = 0
+        # dfs 
+        def dfs(node, level):
+            nonlocal max_level
+            if not node:
+                return None, level
 
-        while dq:
-            cur_res = []
-            for _ in range(len(dq)):
-                each = dq.popleft()
-                if not each:
-                    continue
-                dq.append(each.right)
-                dq.append(each.left)
-                cur_res.append(each.val)
-            if cur_res:
-                res.append(cur_res[0])
+            right = dfs(node.right, level+1)
+            left = dfs(node.left, level+1)
+
+            max_level = max(level+1, max_level)
+
+            if not hash_map[level]:
+                hash_map[level].append(node.val)
+            
+            return (right or left, level)
+
+
+        dfs(root, 0)
+    
+        for i in range(max_level):
+            res.append(hash_map[i][0])
+        
         return res
-                
+        
+        
+
+
