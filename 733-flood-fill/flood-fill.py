@@ -6,7 +6,7 @@ class Solution:
         cols_max = len(image[0])
 
         def dfs(image, x, y, i_color, f_color):
-            print(f"x: {x}, y: {y}, image: {image}")
+            # print(f"x: {x}, y: {y}, image: {image}")
             if (0 <= x < rows_max and 0 <= y < cols_max):
                 if image[x][y] == i_color:
                     image[x][y] = f_color
