@@ -7,28 +7,22 @@ from collections import deque
 #         self.right = right
 class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        q = deque()
+        q.append(root)
+
         res = []
-        
-        # for BFS use queue
-        if not root:
-            return res
 
-        dq = deque([root])
-
-        while dq:
-            curr_res = []
-            for i in range(len(dq)):
-                print(f"dq: {i}")
-                curr = dq.popleft()
-                if curr.left:
-                    dq.append(curr.left)
-                if curr.right:
-                    dq.append(curr.right)
-                curr_res.append(curr.val)
-                print(f"curr_res: {curr_res}")
-
-            res.append(curr_res)
-        print(res)
+        while q:
+            qLen = len(q)
+            level = []
+            for i in range(qLen):
+                node = q.popleft()
+                if node:
+                    level.append(node.val)
+                    q.append(node.left)
+                    q.append(node.right)
+            if level:
+                res.append(level)
         return res
-
-        
+            
+            
