@@ -1,41 +1,34 @@
-from typing import List
-
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
-        rows, cols = len(board), len(board[0])
-        directions = [(-1,0), (1,0), (0,-1), (0,1)]
+        directions = [(0,1), (1,0), (0,-1), (-1,0)]
+
+        rows_max = len(board)
+        cols_max = len(board[0])
+        word_found = False
         seen = set()
-        found = False
 
-        def dfs(i, j, k):
-            nonlocal found
-            if found:   # early stop if already found
+        def dfs(x, y, i, curr):
+            nonlocal word_found
+            
+            curr += board[x][y]
+            # print(f"x: {x}, y: {y}, letter: {board[x][y]}, curr: {curr}")
+            if curr == word:
+                word_found = True
                 return
+            
+            seen.add((x,y))
 
-            # check bounds
-            if not (0 <= i < rows and 0 <= j < cols):
-                return
+            for dx, dy in directions:
+                nx, ny = dx+x, dy+y
+                if (0 <= nx < rows_max and 0 <= ny < cols_max) and (i+1 < len(word)) and (board[nx][ny] == word[i+1]) and (nx,ny) not in seen:
+                    dfs(nx, ny, i+1, curr)
+            seen.remove((x,y))
 
-            # check match
-            if board[i][j] != word[k]:
-                return
 
-            # if last char matches, word found
-            if k == len(word) - 1:
-                found = True
-                return
 
-            seen.add((i, j))
-            for di, dj in directions:
-                ni, nj = i + di, j + dj
-                if (ni, nj) not in seen:
-                    dfs(ni, nj, k + 1)
-            seen.remove((i, j))
-
-        # try every cell as a starting point
-        for i in range(rows):
-            for j in range(cols):
-                dfs(i, j, 0)
-                if found:
-                    return True
-        return False
+        for x in range(rows_max):
+            for y in range(cols_max):
+                if word[0] == board[x][y] and not word_found:
+                    dfs(x, y, 0, "")
+        
+        return word_found
