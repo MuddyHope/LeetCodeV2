@@ -1,33 +1,35 @@
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
+        # start from any 1, keep track of all the seen
+
+        directions = [(0,1), (1,0), (0,-1), (-1,0)]
+
+        res = 0
+        rows_max = len(grid)
+        cols_max = len(grid[0])
         seen = set()
 
-        max_rows = len(grid)
-        max_cols = len(grid[0])
-
-        directions = [(-1,0), (1,0), (0,-1), (0,1)]
-                        # up, down, left, right
+        def dfs(row, col, res):
+            if not (0 <= row < rows_max and 0 <= col < cols_max):
+                return
         
-        res = 0
+            if (row, col) in seen:
+                return
+            
+            if grid[row][col] == "0":
+                return
+            
+            seen.add((row,col))
 
-        def bfs(row, col):
-            dq = collections.deque()
-            dq.append((row,col))
-            seen.add((row, col))
+            for dx,dy in directions:
+                nx, ny = row+dx, col+dy
+                dfs(nx, ny, res)
+            return
+            
 
-            while dq:
-                x, y = dq.popleft()
-                for each_directions in directions:
-                    _x, _y = each_directions
-                    nx, ny = x + _x, y + _y
-                    if 0 <= nx < max_rows and 0 <= ny < max_cols and grid[nx][ny] == "1" and (nx, ny) not in seen:
-                        dq.append((nx, ny))
-                        seen.add((nx, ny))
-
-
-        for i in range(max_rows):
-            for j in range(max_cols):
-                if (i, j) not in seen and grid[i][j] == "1":
-                    bfs(i, j)
+        for row in range(rows_max):
+            for col in range(cols_max):
+                if (row,col) not in seen and grid[row][col] == "1":
                     res += 1
+                    dfs(row,col, res)
         return res
