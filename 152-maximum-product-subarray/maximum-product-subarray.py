@@ -7,9 +7,6 @@ class Solution:
         curMin, curMax = 1, 1
 
         for n in nums:
-            if n == 0:
-                curMin, curMax = 1, 1
-                continue
             
             temp = curMax *n
             curMax = max(curMin*n, curMax*n, n)
