@@ -6,4 +6,3 @@ class Solution:
             if target - nums[i] in hash_map:
                 return [i, hash_map.get(target-nums[i])]
             hash_map[nums[i]] = i
-        
