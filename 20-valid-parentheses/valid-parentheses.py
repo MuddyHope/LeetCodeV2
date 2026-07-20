@@ -1,17 +1,15 @@
 class Solution:
     def isValid(self, s: str) -> bool:
-        my_stack = []
-        my_dict = {"}": "{", ")": "(", "]": "["}
         
-        # append to stack each loop
+
+        hash_map = { "}": "{", "]": "[", ")": "("}
+
+        stack = []
+
         for each in s:
-            if my_stack and my_dict.get(each) == my_stack[-1]:
-                my_stack.pop()
+            if stack and stack[-1] == hash_map.get(each):
+                stack.pop()
             else:
-                my_stack.append(each)
-        if my_stack:
-            return False
-        return True
-
-
+                stack.append(each)
         
+        return True if not stack else False
