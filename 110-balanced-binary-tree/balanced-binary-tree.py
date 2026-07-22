@@ -19,7 +19,6 @@ class Solution:
             return max(_left, _right)
 
         dfs(root)
-        print(res)
         if res > 1:
             return False
         return True
