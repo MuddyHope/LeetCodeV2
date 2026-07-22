@@ -1,35 +1,36 @@
 class MyQueue:
 
     def __init__(self):
-        self.stack = []
-        self.hash = {}
-        self.counter = 0
+        self.stack = [] 
+        self.help_stack = []      
 
     def push(self, x: int) -> None:
         self.stack.append(x)
-        self.hash[self.counter] = x
-        self.counter += 1
 
     def pop(self) -> int:
-        res = self.stack[0]
-        del self.stack[0]
-        self.reduce_hashmap()
-        return res
+        return self.helper_fun(peek=False)
+        
 
     def peek(self) -> int:
-        return self.stack[0]
+        return self.helper_fun(peek=True)
+        
 
     def empty(self) -> bool:
-        return False if len(self.stack) else True
-
-    def reduce_hashmap(self):
-        temp = {}
-        for idx, num in self.hash.items():
-            if idx == 0:
-                continue
-            temp[idx-1] = num
-        self.hash = temp
+        if len(self.stack) >= 1:
+            return False
+        return True
+    
+    def helper_fun(self, peek=False) -> res:
+        while self.stack:
+            self.help_stack.append(self.stack.pop())
+        res = self.help_stack.pop() if not peek else self.help_stack[-1]
+        while self.help_stack:
+            self.stack.append(self.help_stack.pop())
+        return res
         
+
+        
+
 
 # Your MyQueue object will be instantiated and called as such:
 # obj = MyQueue()
