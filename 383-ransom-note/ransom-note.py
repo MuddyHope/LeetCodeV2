@@ -2,11 +2,13 @@ class Solution:
     def canConstruct(self, ransomNote: str, magazine: str) -> bool:
         if len(ransomNote) > len(magazine):
             return False
-        r_counter = dict(Counter(ransomNote))
-        m_counter = dict(Counter(magazine))
-
-        for k,v in r_counter.items():
-            if v > m_counter.get(k, 0):
+        r = Counter(ransomNote)
+        m = Counter(magazine)
+    
+        for letter in ransomNote:
+            if not m.get(letter, 0):
                 return False
+            m[letter] = m.get(letter) -1
+            if m.get(letter) == 0:
+                del m[letter]
         return True
-
