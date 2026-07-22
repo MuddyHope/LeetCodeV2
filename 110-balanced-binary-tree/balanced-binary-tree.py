@@ -12,7 +12,6 @@ class Solution:
             # check left height and right height
             if not node:
                 return 0
-            print(f"curr node: {node.val}")
             
             _left = 1 + dfs(node.left)
             _right = 1 + dfs(node.right)
