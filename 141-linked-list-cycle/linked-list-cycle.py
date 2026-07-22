@@ -10,9 +10,11 @@ class Solution:
         slow = fast = head
 
         while fast and fast.next:
+            print(f"slow: {slow.val}, fast: {fast.val}")
+            
             slow = slow.next
             fast = fast.next.next
             if slow == fast:
                 return True
-    
+
         return False
