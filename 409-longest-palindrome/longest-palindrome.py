@@ -1,17 +1,13 @@
 class Solution:
     def longestPalindrome(self, s: str) -> int:
-        
-
-        counter = defaultdict(int)
+        # abccccdd -> evens can be added, in odd take the longeset one
         res = 0
-
-        for c in s:
-            counter[c] += 1
-            if counter[c] % 2 == 0:
-                res += 2
-            
-        for c in counter:
-            if counter[c] % 2:
-                res += 1
-                break
-        return res
+        counter = Counter(s)
+        has_odd = False
+        for letter, count in counter.items():
+            if count % 2 == 0:
+                res += count
+            else:
+                has_odd = True
+                res += count -1
+        return (res + 1) if has_odd else res
