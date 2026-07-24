@@ -1,7 +1,24 @@
-from functools import lru_cache
 class Solution:
-    @lru_cache
     def climbStairs(self, n: int) -> int:
-        if n == 1 or n == 0:
-            return 1
-        return self.climbStairs(n-1) + self.climbStairs(n-2)
+        
+        dp = [0] * (n+1)
+        
+        """
+        0 -> 0
+        1 -> 1  dp[1] = 1
+        2 -> 1+1, 2     dp[2] = dp[1] + 1
+        3 -> 1+1+1, 1+2, 2+1    dp[3] = dp[2] + 1
+        4 -> 1+1+1+1, 1+2+1, 2+1+1, 1+1+2, 2+2      dp[4] = dp[3] (-1) + dp[2] (-2)
+        """
+        if n <= 2:
+            return n
+        dp[1], dp[2] = 1, 2
+        
+        for i in range(3,len(dp)):
+
+            dp[i] = dp[i-1] + dp[i-2]
+
+        return dp[n]
+
+
+
