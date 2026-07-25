@@ -5,7 +5,6 @@ class Solution:
             i = 0
             stack = []
             while i < len(s):
-                print(f"curr: {s[i]}, stack: {stack}")
                 if stack and s[i] == "#":
                     stack.pop()
                 else:
