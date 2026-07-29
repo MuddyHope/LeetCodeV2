@@ -20,4 +20,3 @@ class Solution:
             if count % 2:
                 res[n // 2] = ch   
         return "".join(res)
-
