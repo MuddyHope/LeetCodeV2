@@ -1,31 +1,24 @@
-from collections import deque
 class Solution:
     def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
         
-        rows_max, cols_max = len(mat), len(mat[0])
+        row_max = len(mat)
+        col_max = len(mat[0])
 
-        dq = deque()
+        q = []
 
-
-        for row in range(rows_max):
-            for col in range(cols_max):
-                if mat[row][col] == 0:
-                    dq.append((row,col))
+        for x in range(row_max):
+            for y in range(col_max):
+                if mat[x][y] == 0:
+                    q.append((x,y))
                 else:
-                    mat[row][col] = float("inf")
-        
+                    mat[x][y] = "#"
 
-        directions = [(1,0), (-1,0), (0,1), (0,-1)]
+        for r, c in q:
 
-        while dq:
-            x, y = dq.popleft()
-
-            for dx, dy in directions:
-                nx, ny = dx+x, dy+y
-
-                if (0 <= nx < rows_max and 0 <= ny < cols_max and mat[nx][ny] > mat[x][y] + 1):
-                    mat[nx][ny] = 1 + mat[x][y]
-                    dq.append((nx,ny))
-        return mat 
-                
-                
+            for dx, dy in [(0,1), (1,0), (-1,0), (0,-1)]:
+                nx = r + dx
+                ny = c + dy
+                if 0 <= nx < row_max and 0 <= ny < col_max and mat[nx][ny] == "#":
+                    mat[nx][ny] = 1 + mat[r][c]
+                    q.append((nx,ny))
+        return mat
