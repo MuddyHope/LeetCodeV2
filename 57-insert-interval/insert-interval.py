@@ -6,7 +6,7 @@ class Solution:
         stack = []
 
         for start, end in intervals:
-            print(f"curr: {start,end} stack : {stack}")
+            # print(f"curr: {start,end} stack : {stack}")
             if stack and stack[-1][1] >= start:
                 _start, _end = stack.pop()
                 stack.append([_start, max(_end, end)])
