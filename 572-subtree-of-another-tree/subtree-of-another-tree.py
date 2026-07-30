@@ -10,19 +10,19 @@ class Solution:
             return True
         if not root:
             return False
+        if self.sameTree(root, subRoot):
+            return True
+        return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
+    
 
-        # now edge cases are done, we have to check if current ROOT and SUBROOT is same
-        res = self.is_same_tree(root, subRoot)
-        if not res:
-            return (self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot))
-        return True
-        
-        
-    def is_same_tree(self, p, q):
+    def sameTree(self, p, q):
         if not p and not q:
             return True
-        
-        if p and q and p.val == q.val:
-            return (self.is_same_tree(p.left, q.left) and self.is_same_tree(p.right, q.right))
-        return False
+        if not p or not q:
+            return False
+        print(f"p: {p.val}, q: {q.val}")
+
+        if p.val != q.val:
+            return False
+        return self.sameTree(p.right, q.right) and self.sameTree(p.left, q.left)
         
