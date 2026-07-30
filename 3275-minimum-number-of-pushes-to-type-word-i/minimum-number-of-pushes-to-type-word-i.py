@@ -2,12 +2,13 @@ from collections import Counter
 
 class Solution:
     def minimumPushes(self, word: str) -> int:
-        freq = sorted(Counter(word).values(), reverse=True)
+        
+        res = 0
+        pushes = 1
 
-        ans = 0
+        for i in range(1, len(word)+1):
+            res += pushes
 
-        for i, f in enumerate(freq):
-            pushes = i // 8 + 1
-            ans += pushes * f
-
-        return ans
+            if (i%8) == 0:
+                pushes += 1
+        return res
