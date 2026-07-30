@@ -10,21 +10,15 @@ class Solution:
             "M":       1000
         }
 
-
-        # IV
         res = 0
-        i = 0
         stack = []
-        while i < len(s):
-            print(f"stack: {stack}, letter: {s[i]}")
-            if stack and hash_map.get(stack[-1]) < hash_map[s[i]]:      # check I < V
-                res -= hash_map[stack[-1]]
-                res += hash_map.get(s[i]) - hash_map[stack.pop()]
+
+        for i in range(len(s)):
+            if stack and hash_map[stack[-1]] < hash_map[s[i]]:
+                res += hash_map[s[i]] - hash_map[stack[-1]] - hash_map[stack[-1]]
             else:
                 stack.append(s[i])
-                res += hash_map.get(s[i])
-            i += 1
+                res += hash_map[s[i]]
         return res
 
-
-
+        
