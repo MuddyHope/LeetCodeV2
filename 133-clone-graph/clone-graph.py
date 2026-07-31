@@ -9,17 +9,32 @@ class Node:
 from typing import Optional
 class Solution:
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        if not node:
+            return None
         
+        root = node
+        dq = deque([node])
 
-        oldToNew = {}
+        hash_map = {}
+        seen = set()
 
-        def dfs(node):
-            if node in oldToNew:
-                return oldToNew[node]
-            
-            copy = Node(node.val)
-            oldToNew[node] = copy
-            for nei in node.neighbors:
-                copy.neighbors.append(dfs(nei))
-            return copy
-        return dfs(node) if node else None
+        while dq:
+            curr = dq.popleft()
+
+            if curr not in seen:
+                seen.add(curr)
+
+                if curr not in hash_map:
+                    new_node = Node(curr.val)
+                    hash_map[curr] = new_node
+                new_node = hash_map[curr]
+
+                for nei in curr.neighbors:
+                    if nei in hash_map:
+                        new_nei = hash_map[nei]
+                    else:
+                        new_nei = Node(nei.val)
+                        hash_map[nei] = new_nei
+                    new_node.neighbors.append(new_nei)
+                    dq.append(nei)
+        return hash_map[root]
