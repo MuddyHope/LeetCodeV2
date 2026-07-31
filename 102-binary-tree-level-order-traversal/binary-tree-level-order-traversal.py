@@ -19,10 +19,9 @@ class Solution:
                 if not _:
                     continue
                 temp.append(_.val)
-                if _.left:
-                    dq.append(_.left)
-                if _.right: 
-                    dq.append(_.right)
-            res.extend([temp])
+                dq.append(_.left)
+                dq.append(_.right)
+            if temp:
+                res.extend([temp])
         return res
         
