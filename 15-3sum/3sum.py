@@ -7,13 +7,11 @@ class Solution:
         # [-1,0,1,2,-1,-4]
         # -4 -1 -1 0 1 2
         i = 0
+        seen = set()
+
         while i < n-2:
-            # if nums[i] == nums[i+1]:
-            #     i += 1
-            #     continue
             l = i + 1
             r = n -1
-            seen = set()
             
             while l < r:
                 curr_sum = nums[i] + nums[l] + nums[r]
