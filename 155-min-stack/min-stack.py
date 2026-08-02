@@ -2,27 +2,23 @@ class MinStack:
 
     def __init__(self):
         self.stack = []
-        self.min_stack = [float(inf)]
-
+        self.minHeap = []
+        
     def push(self, value: int) -> None:
-        # print(f"stack: {self.stack}, min_stack: {self.min_stack}")
         self.stack.append(value)
-        if self.min_stack[-1] >= value:
-            self.min_stack.append(value)
+        heapq.heappush(self.minHeap, value)
 
     def pop(self) -> None:
-        # print(f"stack: {self.stack}, min_stack: {self.min_stack}")
         val = self.stack.pop()
-        if self.min_stack[-1] == val:
-            self.min_stack.pop()
+        self.minHeap[:] = self.stack
+        heapq.heapify(self.minHeap)
 
     def top(self) -> int:
         return self.stack[-1]
-        
+
     def getMin(self) -> int:
-        return self.min_stack[-1]
-
-
+        return self.minHeap[0]
+        
 
 
 # Your MinStack object will be instantiated and called as such:
