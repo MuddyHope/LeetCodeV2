@@ -1,45 +1,47 @@
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
         
+        max_rows = len(grid)
+        max_cols = len(grid[0])
+        dq = deque([])
 
-        directions = [(0,1), (1,0), (-1,0), (0,-1)]
-
-        rows_max = len(grid)
-        cols_max = len(grid[0])
-
-        dq = collections.deque()
+        for r in range(max_rows):
+            for c in range(max_cols):
+                if grid[r][c] == 2:
+                    dq.append([r,c])
 
         seen = set()
-
-        for row in range(rows_max):
-            for col in range(cols_max):
-                if (row,col) not in seen and grid[row][col] == 2:
-                    dq.append((row,col))
-        
         time = -1
         while dq:
-            for _ in range(len(dq)):
-                # print(f"dq: {dq}")
+            # print(f"dq: {list(dq)}")
+            for i in range(len(dq)):
+                print(f"i: {i}, dq: {list(dq)}")
+                r, c = dq.popleft()
+                if not 0 <= r < max_rows or not 0 <= c < max_cols:
+                    continue
+            
+                if (r,c) in seen:
+                    continue
+                
+                # if grid[r][c] != 2:
+                #     dq.append((r,c))
+                print(f"before -> i: {i}, r, c: {r,c}, {grid[r][c]}")
+                
+                seen.add((r,c))
+
+                for dx, dy in ([0,1], [1,0], [-1,0], [0,-1]):
+                    nx, ny = r+dx, c+dy
+                    if (not 0 <= nx < max_rows or not 0 <= ny < max_cols) or (nx,ny) in seen or grid[nx][ny] in (0,2):
+                        continue
+                    dq.append((nx,ny))
+                    grid[nx][ny] = 2
                 # print(f"grid: {grid}")
-                x, y = dq.popleft()
-                # print(f"x: {x}, y: {y}")
-
-                for dx, dy in directions:
-                    nx, ny = x + dx, y + dy
-                    if (
-                        0 <= nx < rows_max and
-                        0 <= ny < cols_max and
-                        grid[nx][ny] == 1
-                    ):
-                        grid[nx][ny] = 2
-                        dq.append((nx, ny))
             time += 1
-        
+    
 
-        for row in range(rows_max):
-            for col in range(cols_max):
-                if grid[row][col] == 1:
+        for r in range(max_rows):
+            for c in range(max_cols):
+                if grid[r][c] == 1:
                     return -1
-        return max(time, 0)
-        
+        return time if seen else 0
 
