@@ -2,21 +2,20 @@ class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         
         res = []
-        subset = set()
-        def dfs(curr, used):
-            print(f"used: {used}, curr: {curr}")
-            if len(curr) == len(nums):
-                res.append(curr[:])
+    
+        def dfs(temp):
+            if len(temp) > len(nums):
                 return
-            for i in range(len(nums)):
-                if i in used:
-                    continue
-                used.add(i)
-                curr.append(nums[i])
-                dfs(curr, used)
-                curr.pop()
-                used.remove(i)
+
+            if len(temp) == len(nums):
+                res.append(temp[:])
 
 
-        dfs([], set())
+            for j in range(len(nums)):
+                if nums[j] not in temp:
+                    temp.append(nums[j])
+                    dfs(temp)
+                    temp.pop()                
+
+        dfs([])
         return res
