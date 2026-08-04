@@ -9,23 +9,20 @@ class Solution:
             if nums[mid] == target:
                 return mid
             
-            if nums[l] == target:
-                return l
-            if nums[r] == target:
-                return r
+            # if nums[l] == target:
+            #     return l
+            # if nums[r] == target:
+            #     return r
             if nums[l] <= nums[mid]:
                 if nums[l] <= target <= nums[mid]:
-                    r = mid
+                    r = mid - 1
                 else:
                     l = mid + 1
             
-            elif nums[r] <= nums[mid]:
+            else:
                 if nums[mid] <= target <= nums[r]:
-                    l = mid
+                    l = mid + 1
                 else:
                     r = mid - 1
-            else:
-                l += 1
-                r -= 1
         return -1
             
