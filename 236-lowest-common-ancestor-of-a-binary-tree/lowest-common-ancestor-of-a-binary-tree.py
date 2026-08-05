@@ -12,7 +12,7 @@ class Solution:
         def dfs(curr):
             if not curr:
                 return None
-            print(f"curr: {curr.val}")
+            # print(f"curr: {curr.val}")
 
             if curr.val == p.val or curr.val == q.val:
                 return curr
