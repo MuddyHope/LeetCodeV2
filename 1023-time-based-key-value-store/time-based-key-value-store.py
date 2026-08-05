@@ -1,25 +1,29 @@
 class TimeMap:
 
     def __init__(self):
-        self.store = defaultdict(list)
-
+        self.hash_map = defaultdict(list)
 
     def set(self, key: str, value: str, timestamp: int) -> None:
-        self.store[key].append([value, timestamp])
+        self.hash_map[key].append([value, timestamp])
 
     def get(self, key: str, timestamp: int) -> str:
+        # binary search or the left, as they are ascending
+        if key not in self.hash_map:
+            return ""
+        vals: List[int] = self.hash_map.get(key)
+        # print(f"vals: {vals}, key: {key}, timestamp: {timestamp}")
+        l, r = 0, len(vals) -1
         res = ""
-        vals = self.store.get(key, [])
-        l, r = 0, len(vals)-1
         while l <= r:
             mid = (l+r)//2
-            if vals[mid][1] <= timestamp:
-                res = vals[mid][0]
+            # print(f"l: {l}, mid: {mid}, r: {r}")
+            curr_key, curr_timestamp = vals[mid]
+            if curr_timestamp <= timestamp:
                 l = mid + 1
+                res = vals[mid][0]
             else:
                 r = mid - 1
         return res
-        
 
 
 # Your TimeMap object will be instantiated and called as such:
