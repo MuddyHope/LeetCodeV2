@@ -9,8 +9,8 @@ class Solution:
                 graph[each[1]].add(each_email)
                 email_to_name[each_email] = name
 
-        print(dict(email_to_name))
-        print(graph)
+        # print(dict(email_to_name))
+        # print(graph)
 
         visited = set()
         stack = []
