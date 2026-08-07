@@ -4,7 +4,7 @@ class Solution:
         res = []
         seen = set()
         def dfs(temp):
-            print(f"curr temp: {temp}")
+            # print(f"curr temp: {temp}")
             if tuple(sorted(temp)) in seen:
                 return
 
@@ -12,7 +12,7 @@ class Solution:
             seen.add(tuple(sorted(temp)))
 
             for i in range(len(nums)):
-                print(f"nums[i]: {nums[i]}")
+                # print(f"nums[i]: {nums[i]}")
                 if nums[i] in temp:
                     continue
                 temp.append(nums[i])
