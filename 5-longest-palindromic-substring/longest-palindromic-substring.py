@@ -1,30 +1,23 @@
 class Solution:
     def longestPalindrome(self, s: str) -> str:
-
-        res = ""
-
-        def is_palindrome(i, j):
-            while i < j:
-                if s[i] != s[j]:
-                    return False
-                i += 1
-                j -= 1
-            return True
-
+        if len(s) == 1:
+            return s
+        def helper(l, r):
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                l -= 1
+                r += 1
+            return s[l +1: r]
+        
+        max_str = s[0]
         i = 0
+        while i < len(s) -1:
+            odd = helper(i, i)
+            even = helper(i, i+1)
 
-        while i < len(s):
-
-            j = i
-
-            while j < len(s):
-                
-                if j - i + 1 > len(res):
-                    if is_palindrome(i, j):
-                        res = s[i:j+1]
-
-                j += 1
-
+            if len(odd) > len(max_str):
+                max_str = odd
+            if len(even) > len(max_str):
+                max_str = even
             i += 1
-
-        return res
+        
+        return max_str
