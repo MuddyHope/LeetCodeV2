@@ -6,10 +6,11 @@
 #         self.right = right
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
-        inorder_hm = {
-            val: i
-            for i, val in enumerate(inorder)
-        }
+        
+        hm_in = {}  # {num, idx..}
+
+        for i in range(len(inorder)):
+            hm_in[inorder[i]] = i
 
         p_idx = 0
         def build(l, r):
@@ -21,12 +22,17 @@ class Solution:
             p_idx += 1
 
             root = TreeNode(root_val)
+            mid = hm_in[root_val]
 
-            mid = inorder_hm[root_val]
+            root.left = build(l, mid - 1)
 
-            root.left = build(l, mid-1)
             root.right = build(mid+1, r)
-
             return root
-        return build(0, len(preorder) -1)
-            
+        return build(0, len(preorder) - 1)
+        
+
+
+        
+        
+
+        
