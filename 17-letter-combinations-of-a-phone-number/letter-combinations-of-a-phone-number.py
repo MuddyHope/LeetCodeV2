@@ -14,7 +14,7 @@ class Solution:
         res = []
 
         def dfs(i, temp):
-            print(f"i: {i}, temp: {temp}")
+            # print(f"i: {i}, temp: {temp}")
 
             if len(temp) == len(digits):
                 res.append("".join(temp))
