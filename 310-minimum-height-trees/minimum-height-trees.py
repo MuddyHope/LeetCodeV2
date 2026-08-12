@@ -20,6 +20,7 @@ class Solution:
                 dq.append(node)
 
         remaining = n
+        print(f"graph: {dict(graph)}")
 
         while remaining > 2:
             size = len(dq)
@@ -27,11 +28,12 @@ class Solution:
 
             for _ in range(size):
                 curr = dq.popleft()
+                print(f"curr: {curr}")
 
                 for neighbor in graph[curr]:
                     degree[neighbor] -= 1
 
                     if degree[neighbor] == 1:
                         dq.append(neighbor)
-
+        print(degree)
         return list(dq)
