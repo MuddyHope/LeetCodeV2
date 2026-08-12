@@ -7,20 +7,14 @@
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
         
-        ## Worst case
-        
-        res = []
-        
-        def dfs(root):
-            if not root:
+        vals = []
+        def dfs(node):
+            nonlocal vals
+            if not node:
                 return
-            dfs(root.left)
-            res.append(root.val)
-            dfs(root.right)
+            vals.append(node.val)
+
+            dfs(node.right)
+            dfs(node.left)
         dfs(root)
-
-        # res.sort()
-        return res[k-1]
-        
-
-        # Now for O(N) case
+        return sorted(vals)[k-1]
