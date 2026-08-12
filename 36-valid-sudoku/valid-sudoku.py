@@ -1,44 +1,49 @@
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
+        # check row, column and box
 
-
-        def line_checker(nums):
-            seen = set()
-            for each in nums:
+        def line_checker(vals):
+            temp = set()
+            for each in vals:
                 if each == ".":
                     continue
-                elif each in seen:
+                elif each in temp:
                     return False
-                seen.add(each)
-
+                else:
+                    temp.add(each)
             return True
 
-        # rows
-        for row in range(9):
-            if not line_checker(board[row]):
+        # row checker 
+        max_rows = len(board)
+        max_cols = len(board[0])
+
+        for i in range(max_rows):
+            if not line_checker(board[i]):
                 return False
-
-        # columns
-        for col in range(9):
-            col_list = []
-
-            for row in range(9):
-                col_list.append(board[row][col])
-
-            if not line_checker(col_list):
+        
+        # column checker
+        temp_board = defaultdict(list)
+        for col in range(max_cols):
+            for row in range(max_rows):
+                temp_board[col].append(board[row][col])
+        # print(temp_board)
+        
+        for i in temp_board:
+            if not line_checker(temp_board[i]):
                 return False
+        
+        temp_box = defaultdict(list)
+        box_idx = 0
+        
+        for row in range(0,9,3):
+            for col in range(0,9,3):
+                vals = []
 
-        # 3x3 boxes
-        for i in range(0, 9, 3):
-            for j in range(0, 9, 3):
-
-                sub_matrix = []
-
-                for r in range(i, i + 3):
-                    for c in range(j, j + 3):
-                        sub_matrix.append(board[r][c])
-
-                if not line_checker(sub_matrix):
+                for i in range(row, row+3):
+                    for j in range(col, col+3):
+                        vals.append(board[i][j])
+                if not line_checker(vals):
                     return False
-
         return True
+
+                
