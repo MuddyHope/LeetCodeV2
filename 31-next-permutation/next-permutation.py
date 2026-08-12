@@ -3,29 +3,23 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        # [2,3,4,1,6,5] -> [2,3,4,5,1,6]
         
-        n = len(nums) - 1
-        i = n
-        while i > 0 and nums[i-1] >= nums[i]:
-            i -= 1
-        print(i)
+        # find the index, where it is smaller than the last idx
 
-        if i == 0:
+        pivot = len(nums) - 1
+        while pivot > 0 and nums[pivot - 1] >= nums[pivot]:
+            pivot -= 1
+        print(nums[pivot])
+
+        if pivot == 0:
             nums.reverse()
             return
-        # now find j
-        j = n
-
-        while j >= i and nums[j] <= nums[i-1]:
-            j -= 1
         
-        nums[i-1], nums[j] = nums[j], nums[i-1]
-        nums[i:] = reversed(nums[i:])
+        successor = len(nums) - 1
+        while successor >= pivot and nums[successor] <= nums[pivot-1]:
+            successor -= 1
         
-       
+        # swap
+        nums[pivot-1], nums[successor] = nums[successor], nums[pivot-1]
 
-
-
-
-        
+        nums[pivot:] = reversed(nums[pivot:])
