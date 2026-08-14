@@ -1,9 +1,7 @@
 class Trie:
-    def __init__(self, val=0):
-        self.val = val
+    def __init__(self):
         self.children = {}
         self.is_word = False
-
 
 class WordDictionary:
 
@@ -15,35 +13,37 @@ class WordDictionary:
 
         for letter in word:
             if letter not in curr.children:
-                curr.children[letter] = Trie(letter)
-
+                curr.children[letter] = Trie()
             curr = curr.children[letter]
-
         curr.is_word = True
 
     def search(self, word: str) -> bool:
-
-        stack = [(self.root, 0)]
-
-        while stack:
-
-            curr, i = stack.pop()
-
-            # We consumed the entire word
+        curr = self.root
+        
+        def dfs(i, curr):
+            # print(f"curr_children: {curr.children}")
             if i == len(word):
-                if curr.is_word:
-                    return True
-                continue
-
-            # Wildcard
-            if word[i] == ".":
-                for child in curr.children.values():
-                    stack.append((child, i + 1))
-
-            # Normal character
-            else:
+                return curr.is_word
+            
+            if word[i] == "." and word[i] not in curr.children:
+                for children in curr.children.values():
+                    if dfs(i+1, children):
+                        return True
+                return False
+            
+            else: 
                 if word[i] in curr.children:
-                    child = curr.children[word[i]]
-                    stack.append((child, i + 1))
+                    return dfs(i+1, curr.children[word[i]])
+                return False
 
-        return False
+
+        return dfs(0, curr)
+    
+
+        
+
+
+# Your WordDictionary object will be instantiated and called as such:
+# obj = WordDictionary()
+# obj.addWord(word)
+# param_2 = obj.search(word)
