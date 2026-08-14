@@ -1,37 +1,50 @@
 class Solution:
     def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
-        ROWS = len(heights)
-        COLS = len(heights[0])
-        atl = set()
-        pac = set()
+        p_oc = set()
+        at_oc = set()
 
-        visit = set()
+        rows = len(heights)
+        cols = len(heights[0])
 
-        def dfs(r, c, visit, prevHeight):
-            print(f"Currently processing: {r}{c}")
-            if (r,c) in visit or r < 0 or c < 0 or r == ROWS or c == COLS or heights[r][c] < prevHeight:
-                print(f"returning while processing {r}{c}")
-                return
+        # Pacific: top row + left column
+        for r in range(rows):
+            p_oc.add((r, 0))
 
-            visit.add((r,c))
-            
-            dfs(r+1,c, visit, heights[r][c])
-            dfs(r-1,c, visit, heights[r][c])
-            dfs(r,c+1, visit, heights[r][c])
-            dfs(r,c-1, visit, heights[r][c])
+        for c in range(cols):
+            p_oc.add((0, c))
 
-        for c in range(COLS):
-            dfs(0, c, pac,heights[0][c])
-            dfs(ROWS-1, c, atl, heights[ROWS-1][c])
+        # Atlantic: bottom row + right column
+        for r in range(rows):
+            at_oc.add((r, cols - 1))
 
-        for r in range(ROWS):
-            dfs(r, 0, pac, heights[r][0])
-            dfs(r, COLS-1, atl, heights[r][COLS-1])
+        for c in range(cols):
+            at_oc.add((rows - 1, c))
 
-        res = []
-        for r in range(ROWS):
-            for c in range(COLS):
-                if (r,c) in atl and (r,c) in pac:
-                    res.append([r,c])
-        return res
-    
+        
+        # all the points from pacific ocean should flow 
+
+        def bfs(starts):
+            visited = set(starts)
+            q = deque(starts)
+
+            while q:
+                r, c = q.popleft()
+
+                for dr, dc in [(1,0), (-1,0), (0,1), (0,-1)]:
+                    nr = r + dr
+                    nc = c + dc
+
+                    if 0 <= nr < rows and 0 <= nc < cols:
+                        
+                        # Reverse water flow
+                        if (nr, nc) not in visited and heights[nr][nc] >= heights[r][c]:
+                            visited.add((nr, nc))
+                            q.append((nr, nc))
+
+            return visited
+
+        pacific_reachable = bfs(p_oc)
+        atlantic_reachable = bfs(at_oc)
+        both = pacific_reachable & atlantic_reachable
+
+        return list(both)
