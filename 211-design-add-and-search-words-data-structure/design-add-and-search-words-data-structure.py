@@ -1,47 +1,49 @@
-class TrieNode:
-    def __init__(self):
+class Trie:
+    def __init__(self, val=0):
+        self.val = val
         self.children = {}
-        self.isWord = False
+        self.is_word = False
 
 
 class WordDictionary:
 
     def __init__(self):
-        self.root = TrieNode()
+        self.root = Trie()
 
     def addWord(self, word: str) -> None:
         curr = self.root
 
         for letter in word:
             if letter not in curr.children:
-                curr.children[letter] = TrieNode()
+                curr.children[letter] = Trie(letter)
 
             curr = curr.children[letter]
 
-        curr.isWord = True
+        curr.is_word = True
 
     def search(self, word: str) -> bool:
 
-        def dfs(node, i):
+        stack = [(self.root, 0)]
 
-            # We consumed the entire search word
+        while stack:
+
+            curr, i = stack.pop()
+
+            # We consumed the entire word
             if i == len(word):
-                return node.isWord
+                if curr.is_word:
+                    return True
+                continue
 
-            letter = word[i]
+            # Wildcard
+            if word[i] == ".":
+                for child in curr.children.values():
+                    stack.append((child, i + 1))
 
             # Normal character
-            if letter != ".":
-                if letter not in node.children:
-                    return False
+            else:
+                if word[i] in curr.children:
+                    child = curr.children[word[i]]
+                    stack.append((child, i + 1))
 
-                return dfs(node.children[letter], i + 1)
-
-            # "." means any character
-            for child in node.children.values():
-                if dfs(child, i + 1):
-                    return True
-
-            return False
-
-        return dfs(self.root, 0)
+        return False
