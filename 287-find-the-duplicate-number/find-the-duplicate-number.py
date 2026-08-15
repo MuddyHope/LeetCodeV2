@@ -1,18 +1,26 @@
 class Solution:
     def findDuplicate(self, nums: List[int]) -> int:
-        slow = nums[0]
-        fast = nums[0]
+        """
+        Find the duplicate number using the binary search template.
+        Feasible condition: count of numbers <= mid > mid
+        """
+        n = len(nums) - 1  # n is the max value (array has n+1 elements)
 
-        while True:
-            # print(f"slow: {slow}, fast: {fast}")
-            slow = nums[slow]
-            fast = nums[nums[fast]]
-            if slow == fast:
-                break
-        
-        slow2 = nums[0]
-        while slow != slow2:
-            slow = nums[slow]
-            slow2 = nums[slow2]
-        return slow
-        
+        # Binary search template on value range [1, n]
+        left, right = 1, n
+        first_true_index = -1
+
+        while left <= right:
+            mid = (left + right) // 2
+
+            # Count how many numbers are <= mid
+            count = sum(1 for num in nums if num <= mid)
+
+            # Feasible: is there excess? (duplicate is <= mid)
+            if count > mid:
+                first_true_index = mid
+                right = mid - 1  # Search for smaller duplicate
+            else:
+                left = mid + 1
+
+        return first_true_index
