@@ -1,9 +1,10 @@
 class Solution:
     def topKFrequent(self, words: List[str], k: int) -> List[str]:
         counter = defaultdict(set)
+        Count = Counter(words)
 
         for word in set(words):
-            freq = words.count(word)
+            freq = Count[word]
             counter[freq].add(word)
 
         res = []
