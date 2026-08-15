@@ -4,7 +4,7 @@ class Solution:
         fast = nums[0]
 
         while True:
-            print(f"slow: {slow}, fast: {fast}")
+            # print(f"slow: {slow}, fast: {fast}")
             slow = nums[slow]
             fast = nums[nums[fast]]
             if slow == fast:
