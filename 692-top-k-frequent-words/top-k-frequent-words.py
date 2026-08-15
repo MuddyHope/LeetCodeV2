@@ -1,20 +1,16 @@
 class Solution:
     def topKFrequent(self, words: List[str], k: int) -> List[str]:
-        counter = defaultdict(set)
-        Count = Counter(words)
+        
 
-        for word in set(words):
-            freq = Count[word]
-            counter[freq].add(word)
+        counter = Counter(words)
+        heap = []
 
+        for val, count in counter.items():
+            heapq.heappush(heap, (-count, val))
+        
         res = []
 
-        for freq in range(len(words), 0, -1):
-            if freq in counter:
-                for word in sorted(counter[freq]):
-                    res.append(word)
-
-                    if len(res) == k:
-                        return res
-
+        for _ in range(k):
+            c, v = heapq.heappop(heap)
+            res.append(v)
         return res
