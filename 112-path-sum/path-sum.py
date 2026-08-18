@@ -13,7 +13,7 @@ class Solution:
                 return True
             
             curr_sum += node.val
-            print(f"curr: {node}")
+            # print(f"curr: {node.val}")
 
             if curr_sum == targetSum and not node.left and not node.right:
                 res = True
