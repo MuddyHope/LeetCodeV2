@@ -10,7 +10,7 @@ class Solution:
         def backtrack(node, curr_sum):
             nonlocal res
             if not node:
-                return True
+                return
             
             curr_sum += node.val
             # print(f"curr: {node.val}")
