@@ -22,6 +22,7 @@ class Solution:
             backtrack(node.left, curr_sum)
             backtrack(node.right, curr_sum)
             curr_sum -= node.val
-        backtrack(root, 0)
+        if backtrack(root, 0):
+            return True
         return res
             
