@@ -1,8 +1,9 @@
 class Solution:
-    def rotate(self, nums: List[int], k: int) -> None:
+    def rotate(self, nums: list[int], k: int) -> None:
         """
         Do not return anything, modify nums in-place instead.
         """
-        print(len(nums))
         k %= len(nums)
-        nums[:] = nums[-k:] + nums[:-k]
+        nums.reverse()
+        nums[:k] = reversed(nums[:k])
+        nums[k:] = reversed(nums[k:])
