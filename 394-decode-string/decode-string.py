@@ -7,7 +7,7 @@ class Solution:
 
         i = 0
         while i < len(s):
-            print(f"curr: {s[i]}")
+            # print(f"curr: {s[i]}")
             if s[i].isdigit():
                 curr = (curr * 10 ) + int(s[i])
             
