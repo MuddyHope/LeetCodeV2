@@ -15,7 +15,7 @@ class Solution:
     
         out = []
         j = 0
-        print(len(list(res)))
+        # print(len(list(res)))
         while j < k:
             _abs, numb = heapq.heappop(res)
             out.append(numb)
