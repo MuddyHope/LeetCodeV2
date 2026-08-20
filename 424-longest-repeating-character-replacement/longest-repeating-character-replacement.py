@@ -1,21 +1,16 @@
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
         
-
-        # window len - count[max_frequency_letter of window] <= k
-
-        count = {}
-
-        left = 0
+        count = [0] * 26
+        l = 0
         res = 0
+        for r in range(len(s)):
+            count[ord(s[r]) - ord('A')] += 1
 
-        for right in range(len(s)):
-            # increment the counter
-            count[s[right]] = 1 + count.get(s[right], 0)
-
-            while (right - left + 1) - max(count.values()) > k:
-                count[s[left]] -= 1
-                left += 1
-
-            res = max(res, right - left + 1)
+            max_count = max(count)
+            while (r-l+1) - max_count > k:
+                count[ord(s[l]) - ord('A')] -= 1
+                l += 1
+            res = max(res, r-l+1)
         return res
+            
