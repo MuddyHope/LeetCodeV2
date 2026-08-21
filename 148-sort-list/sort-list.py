@@ -5,19 +5,21 @@
 #         self.next = next
 class Solution:
     def sortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        curr = head
-        # brute force method
+        if not head:
+            return None
+
         vals = []
-        while curr:
-            vals.append(curr.val)
-            curr = curr.next
+
+        while head:
+            vals.append(head.val)
+            head = head.next
         
-        vals = sorted(vals)
-        dummy = new_head = ListNode()
+        dummy = ListNode(0)
+        head = dummy
 
+        vals.sort()
         for each in vals:
-            new_node = ListNode(each)
-            new_head.next = new_node  # Link it
-            new_head = new_node       # Move the pointer forward
-
-        return dummy.next
+            dummy.next = ListNode(each)
+            dummy = dummy.next
+        
+        return head.next
