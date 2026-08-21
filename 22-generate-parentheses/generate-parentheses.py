@@ -1,14 +1,25 @@
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
-        stack = [("", 0, 0)]
-
         res = []
-        while stack:
-            curr, _open, _close = stack.pop()
-            if len(curr) == 2*n:
-                res.append(curr)
-            if _open < n:
-                stack.append((curr + "(", _open+1, _close))
-            if _close < _open:
-                stack.append((curr + ")", _open, _close + 1))
+        def dfs(sol, open, close):
+            print(f"sol: {sol}, open: {open}, close: {close}")
+            if open == n and close == n:
+                res.append("".join(sol))
+                return
+            
+
+            
+            if 0 <= open < n and close != n:
+                sol.append("(")
+                dfs(sol, open+1, close)
+                sol.pop()
+            if 0 <= close < n and close + 1 <= open:
+                sol.append(")")
+                dfs(sol, open, close+1)
+                sol.pop()
+            return
+        
+
+        dfs([], 0, 0)
         return res
+                
