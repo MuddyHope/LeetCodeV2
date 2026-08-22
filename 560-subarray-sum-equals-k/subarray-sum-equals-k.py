@@ -6,7 +6,7 @@ class Solution:
         for n in nums:
             # print(f"curr: {n}")
             total += n
-            print(f"total: {total}")
+            # print(f"total: {total}")
 
             if total - k in sub_num:
                 count += sub_num[total-k]
