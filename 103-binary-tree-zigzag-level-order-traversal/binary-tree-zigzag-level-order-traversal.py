@@ -1,4 +1,3 @@
-from collections import deque
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
@@ -7,29 +6,29 @@ from collections import deque
 #         self.right = right
 class Solution:
     def zigzagLevelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+
+        dq = deque([root])
+
         res = []
         if not root:
             return res
-        
-        dq = deque([root])
         i = 0
+
         while dq:
-            cur_res = []
-            if i % 2 == 0:
-                odd = -1
-            else:
-                odd = 1
+            print(f"dq: {dq}")
+            temp = []
             for _ in range(len(dq)):
                 curr = dq.popleft()
-                # if not curr:
-                #     continue
+                temp.append(curr.val)
                 if curr.right:
                     dq.append(curr.right)
                 if curr.left:
                     dq.append(curr.left)
-                cur_res.append(curr.val)
+            # print(f"temp: {temp}")
+            if i % 2 == 0:
+                res.append(temp[::-1])
+            else: 
+                res.append(temp)
             i += 1
-            res.append(cur_res[::odd])
-        return (res)
-        
-                
+        return res
+            
