@@ -3,7 +3,6 @@ class Solution:
         res = 0
 
         def dfs(node, vals):
-            nonlocal res
 
             if not node:
                 return
@@ -17,6 +16,8 @@ class Solution:
                 curr_sum += vals[i]
 
                 if curr_sum == targetSum:
+                    nonlocal res
+
                     res += 1
 
             dfs(node.left, vals)
