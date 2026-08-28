@@ -1,22 +1,20 @@
 class Solution:
     def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
-        adj = collections.defaultdict(list)
-        for u, v, w in flights:
-            adj[u].append((v, w))
-            
-        min_cost = [float('inf')] * n
-        min_cost[src] = 0
         
-        queue = collections.deque([(0, src, 0)]) # (stops, node, cost)
-        
-        while queue:
-            stops, u, cost = queue.popleft()
-        
-            if stops > k: continue
-            
-            for v, w in adj[u]:
-                if cost + w < min_cost[v]:
-                    min_cost[v] = cost + w
-                    queue.append((stops + 1, v, min_cost[v]))
-                    
-        return min_cost[dst] if min_cost[dst] != float('inf') else -1
+
+        # bellman-ford
+
+        prices = [float("inf")] * n
+        prices[src] = 0
+
+        for _ in range(k+1):
+            temp = prices.copy()
+
+            for s, d, price in flights:
+                if prices[s] == float("inf"):
+                    continue
+                
+                if price + prices[s] < temp[d]:
+                    temp[d] = price + prices[s]
+            prices = temp 
+        return -1 if  prices[dst] == float("inf") else prices[dst]
