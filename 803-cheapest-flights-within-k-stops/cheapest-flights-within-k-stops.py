@@ -1,40 +1,22 @@
-from collections import defaultdict
 class Solution:
     def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
-        
-        # Build adjacency list: src -> [(cost, dest)]
-        adj = defaultdict(list)
-        for each in flights:
-            adj[each[0]].append((each[2], each[1]))
-
-        # Heap stores: (total_price_so_far, current_city, stops)
-        minHeap = [(0, src, 0)]
-
-        # Use a visited dictionary to track the least stops used to reach each city
-        visited = dict()
-
-        while minHeap:
-            price, node, stops = heapq.heappop(minHeap)
-
-            # If destination reached within allowed stops, return price
-            if node == dst:
-                return price
-
-            # If we've made more stops than allowed, skip
-            if stops > k:
-                continue
-
-            # Avoid revisiting same node with more or equal stops
-            if node in visited and visited[node] < stops:
-                continue
-            visited[node] = stops
-
-            # Explore neighbors
-            for cost, neighbor in adj[node]:
-                heapq.heappush(minHeap, (price + cost, neighbor, stops + 1))
-            # print(visited)
-
-        return -1
+        adj = collections.defaultdict(list)
+        for u, v, w in flights:
+            adj[u].append((v, w))
             
-                
+        min_cost = [float('inf')] * n
+        min_cost[src] = 0
         
+        queue = collections.deque([(0, src, 0)]) # (stops, node, cost)
+        
+        while queue:
+            stops, u, cost = queue.popleft()
+        
+            if stops > k: continue
+            
+            for v, w in adj[u]:
+                if cost + w < min_cost[v]:
+                    min_cost[v] = cost + w
+                    queue.append((stops + 1, v, min_cost[v]))
+                    
+        return min_cost[dst] if min_cost[dst] != float('inf') else -1
