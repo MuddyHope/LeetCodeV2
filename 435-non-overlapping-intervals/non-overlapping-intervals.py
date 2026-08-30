@@ -7,7 +7,7 @@ class Solution:
         res = 0
 
         for start, end in intervals:
-            print(f"start: {start}, end: {end}, prev_end: {prev_end}")
+            # print(f"start: {start}, end: {end}, prev_end: {prev_end}")
             if start < prev_end:
                 res += 1
             else:
