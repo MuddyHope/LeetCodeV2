@@ -7,14 +7,17 @@
 class Solution:
     def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
         
-        # find mid node
+        l = 0 
+        r = len(nums) -1 
+
         def dfs(l, r):
-            if l > r:
+            if not l <= r:
                 return
             mid = (l+r)//2
+            print(l, mid, r)
             node = TreeNode(nums[mid])
-            node.left = dfs(l, mid -1)
-            node.right = dfs(mid+1, r)
+            node.left = dfs(l, mid-1)
+            node.right = dfs(mid+1,r)
             return node
-        
-        return dfs(0, len(nums)-1)
+
+        return dfs(l, r)
