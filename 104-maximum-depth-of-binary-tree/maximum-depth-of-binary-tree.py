@@ -9,13 +9,11 @@ class Solution:
         if not root:
             return 0
         
-        
+
         def dfs(node):
             if not node:
                 return 0
-            
-            left = 1 + dfs(node.left)
-            right = 1 + dfs(node.right)
-            return max(left, right)
+    
+            return 1 + max(dfs(node.left), dfs(node.right))
     
         return dfs(root)
