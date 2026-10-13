@@ -17,9 +17,8 @@ class Solution:
             for c in range(n):
                 res1 += grid[r][c]
 
-            res2 = total - res1
 
-            if res1 == res2:
+            if res1 == total-res1:
                 return True
 
         # Vertical cuts
@@ -29,9 +28,7 @@ class Solution:
             for r in range(m):
                 res3 += grid[r][c]
 
-            res4 = total - res3
-
-            if res3 == res4:
+            if res3 == total - res3:
                 return True
 
         return False
