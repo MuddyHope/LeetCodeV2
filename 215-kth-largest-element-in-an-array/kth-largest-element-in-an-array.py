@@ -1,11 +1,21 @@
+from collections import Counter
+import heapq
+
 class Solution:
-    def findKthLargest(self, nums: List[int], k: int) -> int:
-        heap = []
+    def findKthLargest(self, nums: list[int], k: int) -> int:
 
-        for num in nums:
-            heapq.heappush(heap, num)
+        counter = Counter(nums)
+        hq = []
 
-            if len(heap) > k:
-                heapq.heappop(heap)
+        for num, freq in counter.items():
+            heapq.heappush(hq, (-num, freq))
 
-        return heap[0]
+        i = 0
+
+        while hq:
+            num, freq = heapq.heappop(hq)
+
+            i += freq
+
+            if i >= k:
+                return -num
