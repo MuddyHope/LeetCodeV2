@@ -6,7 +6,7 @@ class Solution:
         for val, freq in counter.items():
             heapq.heappush(hq, (-val, freq))
         
-        print(list(hq))
+        # print(list(hq))
         i = 0
         while i < k:
             key, freq = heapq.heappop(hq)
