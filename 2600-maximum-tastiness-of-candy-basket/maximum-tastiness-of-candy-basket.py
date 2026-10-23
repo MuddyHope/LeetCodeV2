@@ -29,14 +29,14 @@ class Solution:
         return res
         
     def helper_fn(self, price, mid, k) -> int:
-        temp = [price[0]]
+        cnt = 1
         l = price[0]
         for i in range(1, len(price)):
             if price[i] >= mid + l:
                 l = price[i]
-                temp.append(price[i])
+                cnt += 1
         
-        if len(temp) >= k:
+        if cnt >= k:
             return mid
         else:
             return -1
