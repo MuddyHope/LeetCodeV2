@@ -15,7 +15,7 @@ class Solution:
         # for _ in hq[:k-1]:
         #     res.append((_[1]))
         # return res
-        i = 1
+        i = 0
         res = []
         while i <= k:
             _v, _k = heapq.heappop(hq)
