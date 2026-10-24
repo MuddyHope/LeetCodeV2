@@ -16,18 +16,18 @@ class Solution:
         return res
 
     def helper(self, nums, mid, k):
-        temp = []
+        cnt = 0
 
         i = 0
         while i < len(nums):
             if nums[i] <= mid:
                 # we have already robbed this house
-                temp.append(nums[i])
+                cnt += 1
                 i += 2
             else:
                 i += 1
             # print(f"mid: {mid}, temp: {temp}")
-            if len(temp) >= k:
+            if cnt >= k:
                 return True
     
         return False
