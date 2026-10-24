@@ -17,7 +17,7 @@ class Solution:
         # return res
         i = 0
         res = []
-        while i <= k:
+        while i < k:
             _v, _k = heapq.heappop(hq)
             res.append(_k)
             # print(f"_v, _k: {_v, _k}, i: {i}, res: {res}")
