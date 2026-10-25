@@ -7,7 +7,7 @@ class Solution:
 
         while l <= r:
             curr_sum = numbers[l] + numbers[r]
-            print(l, r, curr_sum)
+            # print(l, r, curr_sum)
             if curr_sum == target:
                 res.extend([l+1, r+1])
                 return res
