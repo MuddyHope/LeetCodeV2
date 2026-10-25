@@ -1,20 +1,17 @@
 class Solution:
-    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+    def twoSum(self, numbers: list[int], target: int) -> list[int]:
         
-        # two-pointer search
+        res = []
 
-        left, right = 0, len(numbers) - 1
+        l, r = 0, len(numbers) - 1
 
-        while left <= right:
-            curr_sum = numbers[left] + numbers[right]
-            print(left, right, curr_sum)
+        while l <= r:
+            curr_sum = numbers[l] + numbers[r]
+            print(l, r, curr_sum)
             if curr_sum == target:
-                return [left+1, right+1]
-            elif curr_sum < target:
-                left += 1
+                res.extend([l+1, r+1])
+                return res
+            elif curr_sum > target:
+                r -= 1
             else:
-                right -= 1
-        
-        
-        
-        
+                l += 1
