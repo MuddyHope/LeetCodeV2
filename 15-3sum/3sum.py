@@ -3,7 +3,6 @@ class Solution:
         nums.sort()
 
         i = 0
-        r = len(nums)-1
 
         res = []
 
